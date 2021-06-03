@@ -47,7 +47,7 @@
         Hasło: <input type="password" name="text_passwd" />
         <input type="submit" value="Zaloguj">
     </form>
-    <button>Zarejestruj się</button>
+    <a href="register.jsp"><button>Zarejestruj się</button></a>
 
     <p style="color: red">${error} </p>
 
