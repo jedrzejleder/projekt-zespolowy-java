@@ -1,6 +1,7 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="Database.DatabaseConnection" %>
-<%@ page import="java.sql.SQLException" %><%--
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="authorization.User" %><%--
   Created by IntelliJ IDEA.
   User: Jędrek
   Date: 12.05.2021
@@ -27,11 +28,15 @@
 
 <h1>Witamy na stronie!</h1>
 <p>Zalogowany uzytkownik: <b>${user}</b></p>
+
 <br><br>
 <%
+    String username = sess.getAttribute("user").toString();
+    System.out.println(username);
+    int id = User.getID(username);
     ResultSet rs = null;
     try {
-        rs = DatabaseConnection.getData("SELECT * FROM users");
+        rs = DatabaseConnection.getData("SELECT * FROM books WHERE owner=" + id);
     } catch (SQLException throwables) {
         throwables.printStackTrace();
     }
@@ -40,7 +45,9 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Is read?</th>
     </tr>
     </thead>
     <tbody>
@@ -49,11 +56,14 @@
     %>
     <tr>
         <td><%=rs.getString("id") %></td>
-        <td><%=rs.getString("username") %></td>
+        <td><%=rs.getString("title") %></td>
+        <td><%=rs.getString("author") %></td>
+        <td><%=rs.getString("read") %></td>
     </tr>
     <%}%>
     </tbody>
 </table>
+
 <a href="Logout">Wyloguj</a>
 
 </body>

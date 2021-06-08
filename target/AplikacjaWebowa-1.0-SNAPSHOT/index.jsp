@@ -36,12 +36,6 @@
 </style>
 <body>
 
-    <jsp:useBean id="beanUser" class="beans.User" />
-
-    <%
-        beanUser.setId(5);
-    %>
-
     <form action="login" method="post">
         Login: <input type="text" name="text_login" />
         Hasło: <input type="password" name="text_passwd" />
