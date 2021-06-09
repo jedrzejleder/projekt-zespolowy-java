@@ -36,6 +36,8 @@
 </style>
 <body>
 
+
+
     <form action="login" method="post">
         Login: <input type="text" name="text_login" />
         Hasło: <input type="password" name="text_passwd" />

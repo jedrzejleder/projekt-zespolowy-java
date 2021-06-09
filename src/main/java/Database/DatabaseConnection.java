@@ -7,7 +7,7 @@ public class DatabaseConnection {
     private static Connection connection = null;
 
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost/data_base";
+        String url = "jdbc:mysql://localhost/basic_data_base";
         Properties properties = new Properties();
         properties.setProperty("user", "root");
         properties.setProperty("password", "");

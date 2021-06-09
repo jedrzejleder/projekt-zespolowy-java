@@ -1,7 +1,6 @@
 package authorization;
 
 import Database.DatabaseConnection;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,4 +39,5 @@ public class User {
         }
         return userId;
     }
-}
+
+    }

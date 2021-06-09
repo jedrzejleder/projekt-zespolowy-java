@@ -34,7 +34,6 @@
     String username = sess.getAttribute("user").toString();
     System.out.println(username);
     int id = User.getID(username);
-    System.out.println(id);
     ResultSet rs = null;
     try {
         rs = DatabaseConnection.getData("SELECT * FROM books WHERE owner=" + id);
@@ -45,7 +44,7 @@
 <table>
     <thead>
     <tr>
-        <th>ID</th>
+<%--        <th>ID</th>--%>
         <th>Title</th>
         <th>Author</th>
         <th>Is read?</th>
@@ -56,16 +55,29 @@
     {
     %>
     <tr>
-        <td><%=rs.getString("id") %></td>
+<%--        <td><%=rs.getString("id") %></td>--%>
         <td><%=rs.getString("title") %></td>
         <td><%=rs.getString("author") %></td>
-        <td><%=rs.getString("read") %></td>
+        <td><%=rs.getString("readed") %></td>
     </tr>
     <%}%>
     </tbody>
 </table>
+<br><br><br>
+
+<body>
+<title>Dodawanie Książek</title>
+<form action="add" method="post">
+    Title:  <input type="text" name="text_title" />
+    Author: <input type="text" name="text_author" />
+    isRead: <input type="text" name="text_bool" />
+    <input type="submit" value="Dodaj">
+</form>
+</body>
+
 
 <a href="Logout">Wyloguj</a>
+
 
 </body>
 </html>
