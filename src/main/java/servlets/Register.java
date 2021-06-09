@@ -20,13 +20,14 @@ public class Register extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String user = request.getParameter("text_login");
         String passwd = request.getParameter("text_passwd");
+        String role = "2";
         try {
             Connection connection = DatabaseConnection.getConnection();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        String sql = "INSERT INTO users(username, passwd) VALUES('" + user + "','" + passwd + "');";
+        String sql = "INSERT INTO users(username, passwd, role) VALUES('" + user + "','" + passwd + "','" + role + "');";
         try {
             DatabaseConnection.executeDML(sql);
             System.out.println(sql);

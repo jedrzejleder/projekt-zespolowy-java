@@ -22,7 +22,7 @@ public class add extends HttpServlet {
         String Author = request.getParameter("text_author");
         String Title = request.getParameter("text_title");
         String isRead = request.getParameter("text_bool");
-       HttpSession sess = request.getSession(false);
+        HttpSession sess = request.getSession(false);
         String username = sess.getAttribute("user").toString();
         int id = User.getID(username);
 

@@ -32,12 +32,24 @@ public class User {
             while (resultSet.next()) {
                 userId = Integer.parseInt(resultSet.getString("id"));
             }
-
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return userId;
     }
 
+    public static int getRole(String user) {
+        String sql = "SELECT role FROM users WHERE username='" + user + "'";
+        int userRole = 0;
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            ResultSet resultSet = DatabaseConnection.getData(sql);
+            while (resultSet.next()) {
+                userRole = Integer.parseInt(resultSet.getString("role"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return userRole;
     }
+}

@@ -40,7 +40,11 @@
     } catch (SQLException throwables) {
         throwables.printStackTrace();
     }
+
+    int role = User.getRole(username);
 %>
+
+
 <table>
     <thead>
     <tr>
@@ -74,6 +78,10 @@
     <input type="submit" value="Dodaj">
 </form>
 </body>
+
+<%if(role == 1)%>
+<a href="admin.jsp"><button>Pokaż użytkowników</button></a>
+
 
 
 <a href="Logout">Wyloguj</a>
