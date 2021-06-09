@@ -79,8 +79,7 @@
 </form>
 </body>
 
-<%if(role == 1)%>
-<a href="admin.jsp"><button>Pokaż użytkowników</button></a>
+<%if(role == 1)%><a href="admin.jsp"><button>Pokaż użytkowników</button></a>
 
 
 

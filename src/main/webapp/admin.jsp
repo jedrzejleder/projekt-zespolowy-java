@@ -23,12 +23,14 @@
             sqlex.printStackTrace();
         }
 %>
+
 <table border=1 style="text-align:center">
     <thead>
     <tr>
         <th>ID</th>
-        <th>Username</th>
-        <th>Role</th>
+        <th>Nazwa użytkownika</th>
+        <th>Rola</th>
+        <th>Usuń użytkownika</th>
     </tr>
     </thead>
     <tbody>
@@ -36,9 +38,17 @@
     {
     %>
     <tr>
+        <%
+            String role;
+            if(rs.getString("role").equals("1")){
+                role = "Administrator";
+            } else
+                role = "Użytkownik";
+        %>
         <td><%=rs.getString("id") %></td>
         <td><%=rs.getString("username") %></td>
-        <td><%=rs.getString("role") %></td>
+        <td><%=role%></td>
+        <td><INPUT type="Button" VALUE="Usuń" ONCLICK="buttonDelete(<%=rs.getString("id")%>)"></td>
     </tr>
     <%}%>
     </tbody>
@@ -48,5 +58,11 @@ catch(Exception e){
     System.out.println(e.getMessage());%><br><%
     }
 %>
+
+<SCRIPT LANGUAGE="JavaScript">
+    function buttonDelete(id){
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war/delete?id="+id;
+    }
+</SCRIPT>
 </body>
 </html>
