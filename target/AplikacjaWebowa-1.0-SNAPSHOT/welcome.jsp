@@ -26,10 +26,8 @@
     }
 %>
 
-<h1>Witamy na stronie!</h1>
-<p>Zalogowany uzytkownik: <b>${user}</b></p>
-
-<br><br>
+<h1>Witaj, ${user}!</h1>
+<h2>Twoja kolekcja:</h2>
 <%
     String username = sess.getAttribute("user").toString();
     System.out.println(username);
@@ -49,9 +47,9 @@
     <thead>
     <tr>
 <%--        <th>ID</th>--%>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Is read?</th>
+        <th>Tytuł</th>
+        <th>Autor</th>
+        <th>Przeczytana?</th>
     </tr>
     </thead>
     <tbody>
@@ -59,30 +57,36 @@
     {
     %>
     <tr>
-<%--        <td><%=rs.getString("id") %></td>--%>
         <td><%=rs.getString("title") %></td>
         <td><%=rs.getString("author") %></td>
         <td><%=rs.getString("readed") %></td>
+        <td><INPUT type="Button" VALUE="Usuń" ONCLICK="buttonDelete(<%=rs.getString("id")%>)"></td>
     </tr>
     <%}%>
     </tbody>
 </table>
-<br><br><br>
-
+<br>
 <body>
-<title>Dodawanie Książek</title>
+
+<h2>Dodaj książkę do kolekcji:</h2>
 <form action="add" method="post">
-    Title:  <input type="text" name="text_title" />
-    Author: <input type="text" name="text_author" />
-    isRead: <input type="text" name="text_bool" />
+    Tytuł:  <input type="text" name="text_title" />
+    Autor: <input type="text" name="text_author" />
+    Przeczytana?: <select name="text_bool">
+                        <option value=tak">tak</option>
+                        <option value="nie">nie</option>
+                  </select>
     <input type="submit" value="Dodaj">
 </form>
 </body>
 
 <%if(role == 1)%><a href="admin.jsp"><button>Pokaż użytkowników</button></a>
 
-
-
+<SCRIPT LANGUAGE="JavaScript">
+    function buttonDelete(id){
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war/deleteBook?id="+id;
+    }
+</SCRIPT>
 <a href="Logout">Wyloguj</a>
 
 

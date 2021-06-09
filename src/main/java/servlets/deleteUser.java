@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet(name = "delete", value = "/delete")
-public class delete extends HttpServlet {
+public class deleteUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

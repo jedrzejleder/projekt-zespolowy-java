@@ -61,7 +61,7 @@ catch(Exception e){
 
 <SCRIPT LANGUAGE="JavaScript">
     function buttonDelete(id){
-        window.location.href="http://localhost:8080/AplikacjaWebowa_war/delete?id="+id;
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war/deleteUser?id="+id;
     }
 </SCRIPT>
 </body>
