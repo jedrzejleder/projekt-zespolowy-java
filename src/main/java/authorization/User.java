@@ -1,7 +1,6 @@
 package authorization;
 
 import Database.DatabaseConnection;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,4 +22,22 @@ public class User {
         }
         return true;
     }
-}
+
+    public static int getID(String user) {
+        String sql = "SELECT id FROM users WHERE username='" + user + "'";
+        int userId = 0;
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            ResultSet resultSet = DatabaseConnection.getData(sql);
+            while (resultSet.next()) {
+                userId = Integer.parseInt(resultSet.getString("id"));
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return userId;
+    }
+
+    }
