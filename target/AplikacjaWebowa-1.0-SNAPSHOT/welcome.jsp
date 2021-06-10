@@ -15,17 +15,60 @@
     <title>Witamy!</title>
 </head>
 <style type="text/css">
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: navajowhite;
+        padding: 30px 15px;
+        font-family: "Comic Sans MS";
+        margin-bottom: 20px;
+    }
+
+    nav a {
+        margin: 0 5px;
+        text-decoration: none;
+        transition: color .3s;
+    }
+
+    nav a:visited {
+         color: inherit;
+     }
+
+    nav a:hover {
+        color: darkorange;
+    }
+
     body {
         background-color: antiquewhite;
         text-align: center;
         font-family: sans-serif;
     }
 
+    main {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: flex-start;
+    }
+
+    main h2 {
+        margin-bottom: 20px;
+    }
+
+    .form {
+        width: 300px;
+    }
+
     table {
-        margin: 50px auto 0 auto;
+        /*margin: 25px auto 0 auto;*/
         border-collapse: collapse;
         padding: 20px;
-        border-radius: 25px;
+        border-radius: 10px;
         box-shadow: 5px 5px 10px grey;
         overflow: hidden;
     }
@@ -43,6 +86,11 @@
         background-color: darkorange;
     }
 
+    .tab-header {
+        border-bottom: 1px solid dimgrey;
+        background-color: #d57603 !important;
+    }
+
     form {
         margin: 0 auto;
         display: flex;
@@ -52,27 +100,49 @@
         width: 100px;
     }
 
-    input {
-        margin-bottom: 10px;
-        width: 200px;
+    input, select{
+        margin-bottom: 20px;
+        width: 300px;
+        padding: 10px 15px;
+        background-color: inherit;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid darkorange;
     }
 
-    .add-form {
-        text-align: center;
+    select {
+        text-align-last: center;
+    }
+
+    .button {
+        width: auto;
+        padding: 5px 10px;
+    }
+
+    .styled-button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(255, 208, 153);
+    }
+
+    .styled-button:hover {
+        background-color: rgb(255, 194, 75);
+    }
+
+    .readed {
+        text-transform: uppercase;
     }
 
 </style>
 <body>
-<%
+    <%
     HttpSession sess = request.getSession(false);
     if (sess.getAttribute("user") == null) {
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 %>
-
-<h1>Witaj, ${user}!</h1>
-<h2>Twoja kolekcja:</h2>
-<%
+    <%
     String username = sess.getAttribute("user").toString();
     System.out.println(username);
     int id = User.getID(username);
@@ -85,48 +155,71 @@
 
     int role = User.getRole(username);
 %>
+<nav>
+    <h2>Domowa Biblioteczka</h2>
+    <h3>Witaj, ${user}!</h3>
+    <div>
+        <%if(role == 1)%><a href="admin.jsp">Pokaż użytkowników</a>
+        <a href="Logout">Wyloguj</a>
+    </div>
+</nav>
+<main>
+<div class="list">
+    <h2>Twoja kolekcja:</h2>
 
-
-<table>
-    <thead>
-    <tr>
-<%--        <th>ID</th>--%>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Is read?</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%while(rs.next())
-    {
-    %>
-    <tr>
-        <td><%=rs.getString("title") %></td>
-        <td><%=rs.getString("author") %></td>
-        <td><%=rs.getString("readed") %></td>
-    </tr>
-    <%}%>
-    </tbody>
-</table>
-<br><br><br>
-
-<body>
-<title>Dodawanie Książek</title>
-<form action="add" method="post">
-    Tytuł:  <input type="text" name="text_title" />
-    Autor: <input type="text" name="text_author" />
-    Przeczytana? <select name="text_bool">
-                        <option value=tak">tak</option>
-                        <option value="nie">nie</option>
-                  </select>
-    <input type="submit" value="Dodaj">
-</form>
+    <table>
+        <thead>
+        <tr class="tab-header">
+            <%--        <th>ID</th>--%>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Przeczytana?</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%while(rs.next())
+        {
+        %>
+        <tr>
+            <td><%=rs.getString("title") %></td>
+            <td><%=rs.getString("author") %></td>
+            <td class="readed"><%=rs.getString("readed") %> </td>
+            <td><INPUT class="button styled-button" type="Button" VALUE="Przeczytałem!" ONCLICK="switchReaded('<%=rs.getString("id")%>','<%=rs.getString("readed")%>')"></td>
+            <td><INPUT class="button styled-button" type="Button" VALUE="Usuń" ONCLICK="buttonDelete(<%=rs.getString("id")%>)"></td>
+        </tr>
+        <%}%>
+        </tbody>
+    </table>
 </div>
 
-<%if(role == 1)%><a href="admin.jsp"><button>Pokaż użytkowników</button></a>
+<div class="form">
+    <h2>Dodaj książkę:</h2>
+    <form action="add" method="post">
+        Tytuł:  <input type="text" name="text_title" />
+        Autor: <input type="text" name="text_author" />
+        Przeczytana? <select name="text_bool">
+        <option value="nie">NIE</option>
+        <option value="tak">TAK</option>
 
-<a href="Logout">Wyloguj</a>
+    </select>
+        <input class="styled-button" type="submit" value="Dodaj">
+    </form>
+</div>
+</main>
 
+<SCRIPT LANGUAGE="JavaScript">
+    function buttonDelete(id){
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war_exploded/deleteBook?id="+id;
+    }
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+    function switchReaded(id,readed){
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war_exploded/switchReaded?id="+id+"&readed="+readed;
+    }
+</SCRIPT>
 
 </body>
 </html>
