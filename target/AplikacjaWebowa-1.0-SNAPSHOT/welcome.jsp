@@ -70,11 +70,8 @@
     }
 %>
 
-<h1>Domowa biblioteka</h1>
-<p>Witaj <b>${user}</b>!</p>
-<a href="Logout">Wyloguj</a>
-
-<br><br>
+<h1>Witaj, ${user}!</h1>
+<h2>Twoja kolekcja:</h2>
 <%
     String username = sess.getAttribute("user").toString();
     System.out.println(username);
@@ -85,7 +82,11 @@
     } catch (SQLException throwables) {
         throwables.printStackTrace();
     }
+
+    int role = User.getRole(username);
 %>
+
+
 <table>
     <thead>
     <tr>
@@ -93,7 +94,6 @@
         <th>Title</th>
         <th>Author</th>
         <th>Is read?</th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -101,27 +101,31 @@
     {
     %>
     <tr>
-<%--        <td><%=rs.getString("id") %></td>--%>
         <td><%=rs.getString("title") %></td>
         <td><%=rs.getString("author") %></td>
         <td><%=rs.getString("readed") %></td>
-        <td><button>Przeczytałem!</button></td>
     </tr>
     <%}%>
     </tbody>
 </table>
 <br><br><br>
-<div class="add-form">
-<h2>Dodawanie Książek</h2>
+
+<body>
+<title>Dodawanie Książek</title>
 <form action="add" method="post">
-    Title:  <input type="text" name="text_title" />
-    Author: <input type="text" name="text_author" />
-    isRead: <input type="text" name="text_bool" />
+    Tytuł:  <input type="text" name="text_title" />
+    Autor: <input type="text" name="text_author" />
+    Przeczytana? <select name="text_bool">
+                        <option value=tak">tak</option>
+                        <option value="nie">nie</option>
+                  </select>
     <input type="submit" value="Dodaj">
 </form>
 </div>
 
+<%if(role == 1)%><a href="admin.jsp"><button>Pokaż użytkowników</button></a>
 
+<a href="Logout">Wyloguj</a>
 
 
 </body>

@@ -9,32 +9,31 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet(name = "Register", value = "/Register")
-public class Register extends HttpServlet {
+@WebServlet(name = "deleteBook", value = "/deleteBook")
+public class deleteBook extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String user = request.getParameter("text_login");
-        String passwd = request.getParameter("text_passwd");
-        String role = "2";
+        String id = request.getParameter("id");
         try {
             Connection connection = DatabaseConnection.getConnection();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        String sql = "INSERT INTO users(username, passwd, role) VALUES('" + user + "','" + passwd + "','" + role + "');";
+        String sql = "DELETE FROM books where id="+id;
+
         try {
             DatabaseConnection.executeDML(sql);
             System.out.println(sql);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("welcome.jsp").forward(request, response);
         } catch (SQLException throwables) {
             System.err.println("Błąd polecenia " + sql);
             throwables.printStackTrace();
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }
