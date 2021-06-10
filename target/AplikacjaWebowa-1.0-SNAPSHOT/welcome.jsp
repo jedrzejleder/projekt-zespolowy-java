@@ -59,7 +59,7 @@
     <tr>
         <td><%=rs.getString("title") %></td>
         <td><%=rs.getString("author") %></td>
-        <td><%=rs.getString("readed") %></td>
+        <td><%=rs.getString("readed") %> <INPUT type="Button" VALUE="Zmień" ONCLICK="switchReaded('<%=rs.getString("id")%>','<%=rs.getString("readed")%>')"></td>
         <td><INPUT type="Button" VALUE="Usuń" ONCLICK="buttonDelete(<%=rs.getString("id")%>)"></td>
     </tr>
     <%}%>
@@ -72,7 +72,7 @@
 <form action="add" method="post">
     Tytuł:  <input type="text" name="text_title" />
     Autor: <input type="text" name="text_author" />
-    Przeczytana?: <select name="text_bool">
+    Przeczytana? <select name="text_bool">
                         <option value=tak">tak</option>
                         <option value="nie">nie</option>
                   </select>
@@ -87,6 +87,13 @@
         window.location.href="http://localhost:8080/AplikacjaWebowa_war/deleteBook?id="+id;
     }
 </SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+    function switchReaded(id,readed){
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war/switchReaded?id="+id+"&readed="+readed;
+    }
+</SCRIPT>
+
 <a href="Logout">Wyloguj</a>
 
 
