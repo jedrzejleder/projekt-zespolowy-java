@@ -166,7 +166,11 @@
 <main>
 <div class="list">
     <h2>Twoja kolekcja:</h2>
-
+    <%
+        if(!rs.isBeforeFirst()){
+    %>
+    <h3>Nic tu nie ma! :(</h3>
+    <%} else {%>
     <table>
         <thead>
         <tr class="tab-header">
@@ -179,19 +183,29 @@
         </tr>
         </thead>
         <tbody>
-        <%while(rs.next())
-        {
+        <%
+            while(rs.next())
+            {
         %>
         <tr>
             <td><%=rs.getString("title") %></td>
             <td><%=rs.getString("author") %></td>
             <td class="readed"><%=rs.getString("readed") %> </td>
-            <td><INPUT class="button styled-button" type="Button" VALUE="Przeczytałem!" ONCLICK="switchReaded('<%=rs.getString("id")%>','<%=rs.getString("readed")%>')"></td>
+            <%
+                String buttonReaded = "";
+                if(rs.getString("readed").equals("tak"))
+                    buttonReaded = "Nie przeczytałem!";
+                else
+                    buttonReaded = "Przeczytałem!";
+
+            %>
+            <td><INPUT class="button styled-button" type="Button" VALUE="<%=buttonReaded%>" ONCLICK="switchReaded('<%=rs.getString("id")%>','<%=rs.getString("readed")%>')"></td>
             <td><INPUT class="button styled-button" type="Button" VALUE="Usuń" ONCLICK="buttonDelete(<%=rs.getString("id")%>)"></td>
         </tr>
         <%}%>
         </tbody>
     </table>
+    <%}%>
 </div>
 
 <div class="form">
@@ -211,13 +225,13 @@
 
 <SCRIPT LANGUAGE="JavaScript">
     function buttonDelete(id){
-        window.location.href="http://localhost:8080/AplikacjaWebowa_war_exploded/deleteBook?id="+id;
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war/deleteBook?id="+id;
     }
 </SCRIPT>
 
 <SCRIPT LANGUAGE="JavaScript">
     function switchReaded(id,readed){
-        window.location.href="http://localhost:8080/AplikacjaWebowa_war_exploded/switchReaded?id="+id+"&readed="+readed;
+        window.location.href="http://localhost:8080/AplikacjaWebowa_war/switchReaded?id="+id+"&readed="+readed;
     }
 </SCRIPT>
 
